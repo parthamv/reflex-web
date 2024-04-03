@@ -245,7 +245,7 @@ def github_button() -> rx.Component:
         position="relative",
         top="32px",
         right="-140px",
-        z_index="999",
+        z_index="4",
         padding="var(--Space-4, 16px);",
         align="center",
         width="151px",
