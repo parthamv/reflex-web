@@ -1,49 +1,11 @@
-import reflex as rx
+"""Welcome to Reflex! This file outlines the steps to create a basic app."""
+
+# from rxconfig import config
+
 import importlib
+import reflex as rx
 
-questions = [
-    {
-        "id": 0,
-        "question_type": "multiple_choice",
-        "question_body": "Which of the following are types of variables in a Reflex State?",
-        "question_image": None,
-        "options": ["Base Var", "Computed Var", "Dynamic Var", "Static Var"],
-        "correct_answers": ["Base Var", "Computed Var"]
-    },
-    {
-        "id": 1,
-        "question_type": "single_choice",
-        "question_body": "What type of function is used to modify base variables in Reflex?",
-        "question_image": None,
-        "options": ["Event Handler", "Computed Function", "Event Trigger", "State Method"],
-        "correct_answers": ["Event Handler"]
-    },
-    {
-        "id": 2,
-        "question_type": "multiple_choice",
-        "question_body": "Which operators are supported by Reflex for performing operations on vars?",
-        "question_image": None,
-        "options": ["+", "to_string()", "reverse()", "substring()"],
-        "correct_answers": ["+", "to_string()", "reverse()"]
-    },
-    {
-        "id": 3,
-        "question_type": "single_choice",
-        "question_body": "What does the @rx.cached_var decorator indicate about a var?",
-        "question_image": None,
-        "options": ["It is updated every time the state changes", "It is never updated", "It is only recomputed when dependent vars change", "It can be directly set by event handlers"],
-        "correct_answers": ["It is only recomputed when dependent vars change"]
-    },
-    {
-        "id": 4,
-        "question_type": "multiple_choice",
-        "question_body": "Which statements are true about base vars in Reflex?",
-        "question_image": None,
-        "options": ["They can be modified directly by event handlers", "They must be JSON serializable", "They are automatically recomputed", "They can store backend-only data"],
-        "correct_answers": ["They can be modified directly by event handlers", "They must be JSON serializable"]
-    }
-]
-
+docs_url = "https://reflex.dev/docs/getting-started/introduction/"
 class Question(rx.Base):
     id: int
     question_type: str
@@ -61,11 +23,14 @@ class State(rx.State):
     """The app state."""
     index : int = 0
     quiz_completed: bool = False
-    questions: list[Question] = [Question.parse_obj(q) for q in questions]
+    questions: list[Question] = []
     submitted_answers: dict[int, list[str]] = {}
 
+    def load_questions(self, questions_list):
+        self.questions = [Question.parse_obj(q) for q in questions_list]
+        print(questions_list)
+
     def submit_question(self, data, question_id):
-        print(data),
         if "_selected_option" in data:
             submitted_answer = [data["_selected_option"]]
         else:  # multiple_choice
@@ -78,7 +43,12 @@ class State(rx.State):
 
     @rx.var
     def current_question(self) -> Question:
-        return self.questions[self.index]
+        if 0 <= self.index < len(self.questions):
+            return self.questions[self.index]
+        else:
+            # Handle the case where the index is out of range
+            # For example, return None or raise a more descriptive error
+            return None
 
     def next_question(self):
         if self.index < len(self.questions) - 1:
@@ -159,23 +129,26 @@ def quiz_comp() -> rx.Component:
     cur_question = State.current_question
     return rx.vstack(
         rx.cond(
-            cur_question.question_type == "single_choice",
-            single_choice_question_comp(cur_question),
-            multi_choice_question_comp(cur_question),
+            cur_question,
+            rx.cond(
+                cur_question.question_type == "single_choice",
+                single_choice_question_comp(cur_question),
+                multi_choice_question_comp(cur_question),
+            ),
         ),
     )
 
 def question_result(question : Question) -> rx.Component:
     return rx.vstack(
         rx.hstack(
-            rx.text("Question: "),
-            rx.text(question.id),
+            rx.text("Question: ", size="2",),
+            rx.text(question.id, size="2"),
         ),
         rx.vstack(
             rx.cond(
                 question.is_correct,
-                rx.text("Correct!"),
-                rx.text("Incorrect!"),
+                rx.text("Correct!", size="2",),
+                rx.text("Incorrect!", size="2",),
             ),
         )
     )
@@ -183,7 +156,7 @@ def question_result(question : Question) -> rx.Component:
 def result_comp() -> rx.Component:
     return rx.center(
         rx.vstack(
-            rx.text("-----Test Result-----"),
+            rx.text("-----Test Result-----", size="3"),
             rx.foreach(
                 State.questions,
                 question_result,
@@ -191,30 +164,19 @@ def result_comp() -> rx.Component:
         )
     )
 
-from .quizzes.components import props_quiz
-
-def load_questions():
-    print(props_quiz.questions)
-    return props_quiz.questions
-
-# def quiz_component() -> rx.Component:
-#     questions = load_questions()
-#     return rx.hstack(
-#         rx.cond(
-#             State.quiz_completed,
-#             result_comp(),
-#             quiz_comp(),
-#         ),
-#         align="center",
-#         spacing="7",
-#         font_size="2em",
-#     )
-
-def quiz_component() -> rx.Component:
-    questions = load_questions()
-    return rx.hstack(
-        rx.text("huhuhuhuhxcuwhwuhdwuhwhduwhduw"),
-        align="center",
-        spacing="7",
-        font_size="2em",
+def quiz_component(questions_list) -> rx.Component:
+    return rx.center(
+        rx.hstack(
+            rx.cond(
+                State.quiz_completed,
+                result_comp(),
+                quiz_comp(),
+            ),
+            align="center",
+            spacing="7",
+            font_size="2em",
+        ),
+        # on_mount=lambda: State.load_questions(questions_list),
+        on_mount=State.load_questions(questions_list),
+        height="50vh",
     )

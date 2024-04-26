@@ -2,6 +2,7 @@
 import reflex as rx
 
 from pcweb.pages.docs import vars
+from pcweb.quiz.quiz import quiz_component
 ```
 
 # Rendering Iterables
@@ -194,4 +195,54 @@ def packing_list():
         rx.list(rx.foreach(ForeachCondState.to_do_list, render_item)),
     )
 
+```
+
+```python exec
+questions = [
+    {
+        "id": 0,
+        "question_type": "multiple_choice",
+        "question_body": "Which types of data structures can be iterated over using the `rx.foreach` component in Reflex?",
+        "question_image": None,
+        "options": ["list", "tuple", "dictionary", "set"],
+        "correct_answers": ["list", "tuple", "dictionary"]
+    },
+    {
+        "id": 1,
+        "question_type": "single_choice",
+        "question_body": "In the given example of iterating through a dictionary, how are the dictionary elements passed to the rendering function?",
+        "question_image": None,
+        "options": ["As single values", "As key-value pairs", "As separate lists", "None of the above"],
+        "correct_answers": ["As key-value pairs"]
+    },
+    {
+        "id": 2,
+        "question_type": "multiple_choice",
+        "question_body": "What features of the `rx.foreach` component are demonstrated across the different examples?",
+        "question_image": None,
+        "options": ["Handling lists", "Handling dictionaries", "Enumerating items", "Nested iterations", "Conditional rendering"],
+        "correct_answers": ["Handling lists", "Handling dictionaries", "Enumerating items", "Nested iterations", "Conditional rendering"]
+    },
+    {
+        "id": 3,
+        "question_type": "multiple_choice",
+        "question_body": "What operations are determined by the type annotation on the `state var` in a Reflex application using `rx.foreach`?",
+        "question_image": None,
+        "options": ["The type of component rendered", "The type of operations available on data", "The style properties of the component", "None of the above"],
+        "correct_answers": ["The type of operations available on data"]
+    },
+    {
+        "id": 4,
+        "question_type": "single_choice",
+        "question_body": "How does the `rx.foreach` component handle conditional rendering as demonstrated in the example with a to-do list?",
+        "question_image": None,
+        "options": ["By using a separate 'rx.cond' component", "By modifying the 'rx.foreach' directly", "By filtering the list before passing it", "By changing state variables"],
+        "correct_answers": ["By using a separate 'rx.cond' component"]
+    }
+]
+
+```
+
+```python eval
+quiz_component(questions)
 ```

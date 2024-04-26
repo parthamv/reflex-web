@@ -1,7 +1,7 @@
 ```python exec
 import reflex as rx
 from pcweb import constants, styles
-
+from pcweb.quiz.quiz import quiz_component
 
 
 route = (
@@ -175,4 +175,81 @@ with the current state.
 
 ```python
 {client_ip}
+```
+
+```python exec
+questions = [
+    {
+        "id": 0,
+        "question_type": "multiple_choice",
+        "question_body": "What can be achieved using the '@rx.page' decorator in the Reflex framework?",
+        "question_image": None,
+        "options": [
+            "Define a static route",
+            "Create a nested route",
+            "Add a page with a specific route and title",
+            "Access client IP address"
+        ],
+        "correct_answers": ["Add a page with a specific route and title"]
+    },
+    {
+        "id": 1,
+        "question_type": "single_choice",
+        "question_body": "Which attribute would you use to get the actual URL displayed in the browser including query parameters?",
+        "question_image": None,
+        "options": [
+            "router.page.path",
+            "router.page.raw_path",
+            "router.session.client_ip",
+            "router.page.params"
+        ],
+        "correct_answers": ["router.page.raw_path"]
+    },
+    {
+        "id": 2,
+        "question_type": "multiple_choice",
+        "question_body": "In the Reflex framework, which of the following statements are true regarding pages?",
+        "question_image": None,
+        "options": [
+            "You can use function names as default routes",
+            "Every page must be explicitly added with 'app.add_page()'",
+            "@rx.page decorator cannot specify custom routes",
+            "Nested routes can be created for more complex page structures"
+        ],
+        "correct_answers": [
+            "You can use function names as default routes",
+            "Nested routes can be created for more complex page structures"
+        ]
+    },
+    {
+        "id": 3,
+        "question_type": "single_choice",
+        "question_body": "What is used to handle dynamic URL segments and query parameters in a Reflex application?",
+        "question_image": None,
+        "options": [
+            "router.page.full_raw_path",
+            "router.page.params",
+            "router.session.client_ip",
+            "router.page.path"
+        ],
+        "correct_answers": ["router.page.params"]
+    },
+    {
+        "id": 4,
+        "question_type": "single_choice",
+        "question_body": "Where in the Reflex framework would you find the client's IP address?",
+        "question_image": None,
+        "options": [
+            "router.page.raw_path",
+            "router.page.path",
+            "router.session.client_ip",
+            "router.page.params"
+        ],
+        "correct_answers": ["router.session.client_ip"]
+    }
+]
+```
+
+```python eval
+quiz_component(questions)
 ```

@@ -2,6 +2,7 @@
 import reflex as rx
 
 from pcweb.pages.docs import vars, library
+from pcweb.quiz.quiz import quiz_component
 ```
 
 # Conditional Rendering
@@ -266,4 +267,79 @@ def cond_style_example():
             ),
         ),
     )
+```
+
+```python exec
+questions = [
+    {
+        "id": 0,
+        "question_type": "single_choice",
+        "question_body": "What does the `cond` component in Reflex do?",
+        "question_image": None,
+        "options": [
+            "It performs mathematical operations.",
+            "It renders components based on a condition.",
+            "It loops over a list of items.",
+            "It fetches data from a server."
+        ],
+        "correct_answers": ["It renders components based on a condition."]
+    },
+    {
+        "id": 1,
+        "question_type": "multiple_choice",
+        "question_body": "Which operators can be used with the `cond` component to create complex conditions?",
+        "question_image": None,
+        "options": [
+            "Logical AND (&)",
+            "Logical OR (|)",
+            "Multiplication (*)",
+            "None of the above"
+        ],
+        "correct_answers": ["Logical AND (&)", "Logical OR (|)"]
+    },
+    {
+        "id": 2,
+        "question_type": "single_choice",
+        "question_body": "In Reflex, what will happen if a `cond` component's condition evaluates to false and there is no third argument?",
+        "question_image": None,
+        "options": [
+            "An error is thrown.",
+            "The second argument is still rendered.",
+            "Nothing is rendered.",
+            "The default component is rendered."
+        ],
+        "correct_answers": ["Nothing is rendered."]
+    },
+    {
+        "id": 3,
+        "question_type": "multiple_choice",
+        "question_body": "Which features describe the `cond` component in Reflex?",
+        "question_image": None,
+        "options": [
+            "It acts similar to a ternary operator in Python.",
+            "It requires three arguments necessarily.",
+            "It can use negation (~) to invert conditions.",
+            "It allows only simple boolean checks."
+        ],
+        "correct_answers": ["It acts similar to a ternary operator in Python.", "It can use negation (~) to invert conditions."]
+    },
+    {
+        "id": 4,
+        "question_type": "single_choice",
+        "question_body": "What is the purpose of nesting `cond` components in Reflex?",
+        "question_image": None,
+        "options": [
+            "To handle multiple styles.",
+            "To render an image conditionally.",
+            "To create complex logical conditions similar to if-elif-else in Python.",
+            "To improve performance."
+        ],
+        "correct_answers": ["To create complex logical conditions similar to if-elif-else in Python."]
+    }
+]
+
+```
+
+```python eval
+quiz_component(questions)
 ```

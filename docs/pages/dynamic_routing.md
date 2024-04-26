@@ -1,6 +1,7 @@
 ```python exec
 import reflex as rx
 from pcweb import constants, styles
+from pcweb.quiz.quiz import quiz_component
 
 dynamic_routes = (
 """
@@ -130,3 +131,87 @@ Each optional catch-all pattern should be independent and not nested within anot
 | `/products/[category]/[...subcategories]/[...items]`  | `/products/electronics/laptops`                        |  invalid |
 |                                                       | `/products/electronics/laptops/lenovo`                 |  invalid |
 |                                                       | `/products/electronics/laptops/lenovo/thinkpad`        |  invalid |
+
+
+
+
+```python exec
+questions = [
+    {
+        "id": 0,
+        "question_type": "multiple_choice",
+        "question_body": "What can you use Reflex's dynamic routes for in web applications?",
+        "question_image": None,
+        "options": [
+            "Display static text",
+            "Create flexible and adaptable URL structures",
+            "Upload files",
+            "Send emails"
+        ],
+        "correct_answers": ["Create flexible and adaptable URL structures"]
+    },
+    {
+        "id": 1,
+        "question_type": "multiple_choice",
+        "question_body": "Which of the following is an example of a catch-all route in Reflex?",
+        "question_image": None,
+        "options": [
+            "`/users/[id]/posts/[...username]`",
+            "`/products/[category]/[id]`",
+            "`/users/posts`",
+            "`/services/[service_id]`"
+        ],
+        "correct_answers": ["`/users/[id]/posts/[...username]`"]
+    },
+    {
+        "id": 2,
+        "question_type": "multiple_choice",
+        "question_body": "What does the optional catch-all route (`[[...username]]`) indicate in Reflex?",
+        "question_image": None,
+        "options": [
+            "The segments are mandatory",
+            "The segments are optional and the URL can match with or without them",
+            "The segments are encrypted",
+            "None of the above"
+        ],
+        "correct_answers": ["The segments are optional and the URL can match with or without them"]
+    },
+    {
+        "id": 3,
+        "question_type": "single_choice",
+        "question_body": "What should be the placement of catch-all routes in the URL pattern according to Reflex documentation?",
+        "question_image": None,
+        "options": [
+            "At the beginning",
+            "In the middle",
+            "At the end",
+            "Anywhere"
+        ],
+        "correct_answers": ["At the end"]
+    },
+    {
+        "id": 4,
+        "question_type": "multiple_choice",
+        "question_body": "Which of these URL patterns are valid for a Reflex application as per the Routes Validation Table?",
+        "question_image": None,
+        "options": [
+            "`/users/john/doe`",
+            "`/products/electronics/laptops/lenovo`",
+            "`/services/123`",
+            "`/users/[...username]/posts`"
+        ],
+        "correct_answers": [
+            "`/users/john/doe`",
+            "`/products/electronics/laptops/lenovo`"
+        ]
+    }
+]
+
+```
+
+
+```python eval
+quiz_component(questions)
+```
+
+
