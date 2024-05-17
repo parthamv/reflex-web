@@ -223,7 +223,7 @@ def sidebar_item_comp(
         ),
     )
 
-
+# TODO: This function is suspicious!
 def calculate_index(sidebar_items, url):
     if not isinstance(sidebar_items, list):
         sidebar_items = [sidebar_items]
@@ -329,6 +329,8 @@ def create_sidebar_section(section_title, items, index, url):
                 for item in items
             ],
             allow_multiple=True,
+
+            # TODO this line is suspicious
             default_index=index if index is not None else [],
             width="100%",
             padding_left="0em",

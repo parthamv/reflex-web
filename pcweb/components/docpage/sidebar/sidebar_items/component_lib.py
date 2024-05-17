@@ -2,6 +2,7 @@ import reflex as rx
 from ..state import SidebarItem
 from reflex.components.chakra.base import ChakraComponent
 
+# TODO: This file needs investigation!
 
 def get_component_link(category, clist, prefix="") -> str:
     if issubclass(clist[1], ChakraComponent):
