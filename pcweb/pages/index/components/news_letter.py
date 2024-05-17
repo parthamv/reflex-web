@@ -81,7 +81,7 @@ def news_letter_form() -> rx.Component:
         on_submit=IndexState.signup(),
     )
 
-def news_letter_section() -> rx.Component:
+def news_letter_tablet_desktop() -> rx.Component:
     return rx.center(
         rx.cond(
             IndexState.signed_up,
@@ -95,3 +95,29 @@ def news_letter_section() -> rx.Component:
         width="100%",
         padding = "3em",
     )
+
+
+def news_letter_mobile_only() -> rx.Component:
+    return rx.center(
+        rx.text("Mobile View", color="red"),
+        width="80%",
+        height="100px",
+        border="1px solid red",
+    )
+
+
+
+def news_letter_section() -> rx.Component:
+    return rx.flex(
+        rx.mobile_only(
+            news_letter_mobile_only(),
+            width="100%",
+        ),
+        rx.tablet_and_desktop(
+            news_letter_tablet_desktop(),
+            width="100%",
+        ),
+        width="100%"
+    )
+
+
